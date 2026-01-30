@@ -2,207 +2,692 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ISFT Instituti</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #1d2671, #c33764);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+:root{
+  --primary:#8b0000;
+  --bg:#ffffff;
+  --text:#1a1a1a;
+  --card:#f6f6f6;
+}
+body.dark{
+  --bg:#0f0f0f;
+  --text:#f1f1f1;
+  --card:#1c1c1c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Segoe UI,Roboto,'Times New Roman', Times, serif,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
 }
 
-.container {
-    background: #fff;
-    width: 95%;
-    max-width: 1000px;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),#5a0000);
+  color:#fff;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+.logo img{
+  width:70px;
+  height:70px;
+  object-fit:contain;
+}
+.logo h1{
+  font-size:22px;
+  margin:0;
+}
+.toggle{
+  cursor:pointer;
+  background:#8b0000;
+  color:#000;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:14px;
 }
 
-.header {
-    text-align: center;
+/* MAIN */
+main{
+  padding:30px;
+  max-width:1200px;
+  margin:auto;
+}
+.home{
+  text-align:center;
+  margin-top:40px;
+}
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+.btn{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:18px 28px;
+  font-size:18px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.3s;
+}
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(0,0,0,.25);
 }
 
-.header img {
-    width: 120px;
-    margin-bottom: 10px;
+/* TELEGRAM BLOCK */
+.telegram-box{
+  margin-top:35px;
+  background:var(--card);
+  padding:22px;
+  border-radius:14px;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+.telegram-box h3{
+  margin-top:0;
+  color:var(--primary);
+}
+.telegram-box p{
+  margin:8px 0;
+  font-size:15px;
 }
 
-h1 {
-    color: #1d2671;
+/* SECTIONS */
+.section{
+  display:none;
+}
+.section.active{
+  display:block;
+}
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
 
-.buttons {
-    text-align: center;
-    margin-top: 25px;
+/* SEARCH */
+.search{
+  margin-bottom:20px;
+}
+.search input{
+  width:100%;
+  padding:14px;
+  font-size:16px;
+  border-radius:10px;
+  border:2px solid var(--primary);
 }
 
-.btn {
-    padding: 15px 30px;
-    margin: 10px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #1d2671, #c33764);
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:10px;
+  text-align:left;
+}
+th{
+  background:var(--primary);
+  color:#fff;
 }
 
-.btn:hover {
-    opacity: 0.9;
-}
-
-.section {
-    display: none;
-    margin-top: 30px;
-}
-
-.card {
-    background: #f7f9fc;
-    padding: 25px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-}
-
-.card h2 {
-    color: #c33764;
-}
-
-.search input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 25px;
-}
-
-ul {
-    padding-left: 20px;
-}
-
-.back {
-    text-align: center;
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  opacity:.7;
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
+<header>
+  <div class="logo">
+    <images src="images/logo.svg" alt="ISFT Logo">
+    <h1>ISFT Instituti</h1>
+  </div>
+  <div class="toggle" onclick="toggleTheme()">🌙 / ☀️</div>
+</header>
 
-<div class="container">
+<main>
 
-    <div class="header">
-        <img src="images/logo.svg" alt="ISFT Instituti Logo">
-        <h1>ISFT Instituti ma'lumotlar bazasiga xush kelibsiz</h1>
-    </div>
+<!-- HOME -->
+<div class="home" id="home">
+  <h2>ISFT Instituti ma‘lumotlari</h2>
+  <p>Kerakli bo‘limni tanlang</p>
 
-    <div class="buttons">
-        <button class="btn" onclick="showSection('talabalar')">
-            Talabalar bilan ishlash bo‘limi
-        </button>
-        <button class="btn" onclick="showSection('qabul')">
-            Qabul bo‘limi
-        </button>
-    </div>
+  <div class="buttons">
+    <button class="btn" onclick="openSection('students')">
+      Talabalar bilan ishlash bo‘limi
+    </button>
+    <button class="btn" onclick="openSection('admission')">
+      Qabul bo‘limi
+    </button>
+  </div>
 
-    <!-- TALABALAR BO‘LIMI -->
-    <div id="talabalar" class="section">
-
-        <div class="search">
-            <input type="text" placeholder="Ma’lumotlarni qidirish...">
-        </div>
-
-        <div class="card">
-            <h2>📚 Yo‘nalishlar</h2>
-            <p><b>Assalomu alaykum, hozirgi vaqtda ISFT Instituti yo‘nalishlari:</b></p>
-            <ul>
-                <li>UOS BA (Hons) – Buxgalteriya hisobi va moliya</li>
-                <li>UOS BA (Hons) – Biznes va menejment</li>
-                <li>60310200 – Xalqaro munosabatlar</li>
-                <li>60412200 – Moliya sohasida boshqaruv</li>
-                <li>60110100 – Pedagogika</li>
-                <li>60110400 – Boshlang‘ich ta’lim (sirtqi, 5-yillik staj)</li>
-                <li>60110200 – Maktabgacha ta’lim</li>
-                <li>60310300 – Psixologiya</li>
-                <li>70110901 – Xorijiy til va adabiyoti (sirtqi mavjud emas)</li>
-                <li>60230100 – Filologiya va tillarni o‘qitish (sirtqi mavjud emas)</li>
-                <li>60410100 – Iqtisodiyot</li>
-                <li>60410600 – Bank ishi</li>
-                <li>60411200 – Marketing</li>
-                <li>60610200 – Axborot xavfsizligi</li>
-                <li>60610100 – Axborot tizimlari va texnologiyalari</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>🧑‍🎓 Amaliyot masalasi</h2>
-            <p><b>Assalomu alaykum, hurmatli talaba!</b></p>
-            <p>Amaliyot qilish uchun quyidagi ma’lumotlarni yuboring:</p>
-            <ul>
-                <li>ID</li>
-                <li>F.I.O.</li>
-                <li>Kurs</li>
-                <li>Telefon raqam</li>
-                <li>Ta’lim shakli</li>
-                <li>Ta’lim tili</li>
-                <li>Yo‘nalish</li>
-                <li>Amaliyot o‘tamoqchi bo‘lgan joy manzili (aniq)</li>
-                <li>Boshlanish sanasi</li>
-                <li>Amaliyot muddati (maksimal 3 oy)</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>⚠️ Platforma ishlamayotganda</h2>
-            <p>
-                Assalomu alaykum, hozirda platformamizda profilaktika ishlari olib borilmoqda.
-                Siz hozircha:
-            </p>
-            <p>❌ intranet.isft.uz</p>
-            <p>❌ ISFT LMS ilovasi</p>
-            <p>
-                orqali kira olmaysiz.  
-                ✅ <b>lms.isft.uz</b> sayti orqali shaxsiy platformangizga kirishingiz mumkin.
-            </p>
-        </div>
-
-        <div class="back">
-            <button class="btn" onclick="goBack()">Orqaga</button>
-        </div>
-    </div>
-
-    <!-- QABUL BO‘LIMI -->
-    <div id="qabul" class="section">
-        <div class="card">
-            <h2>Qabul bo‘limi</h2>
-            <p>Qabul yoz oyida boshlanadi.</p>
-            <p><b>Telefon:</b> +998 55 506 17 17</p>
-        </div>
-
-        <div class="back">
-            <button class="btn" onclick="goBack()">Orqaga</button>
-        </div>
-    </div>
-
+  <!-- 🔹 TELEGRAM MA'LUMOTLAR -->
+  <div class="telegram-box">
+    <h3>📢 Rasmiy Telegram kanallari</h3>
+    <p><b>@isft7</b> — Talabalar bilan ishlash bo‘limi (kunduzgi va sirtqi)</p>
+    <p><b>@isft3</b> — Masofaviy ta’lim talabalari uchun</p>
+    <p><b>@isftamaliyot</b> — Amaliyot bo‘yicha</p>
+    <p><b>@isft55</b> — 2025–2026 o‘quv yili bitiruvchilari</p>
+    <hr>
+    <p><b>🤖 Rasmiy Telegram bot:</b><br>@isftstudents_bot</p>
+    <p><b>Aloqa markazi</b> - +998 55 508 37 37</p>
+  </div>
 </div>
 
-<script>
-function showSection(id) {
-    document.getElementById("talabalar").style.display = "none";
-    document.getElementById("qabul").style.display = "none";
-    document.getElementById(id).style.display = "block";
-}
+<!-- QABUL -->
+<div class="section" id="admission">
+  <div class="card">
+    <h2>📌 Qabul bo‘limi</h2>
+    <p>
+      <strong>Qabul 30-sentabr kuni rasman tugatilgan.</strong><br><br>
+      Ma’lumot olish uchun <b>1-iyun</b sanasidan so‘ng:<br><br>
+      📞 <b>+998 55 506 17 17</b>
+    </p>
+    <br>
+    <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
+  </div>
+</div>
 
-function goBack() {
-    document.getElementById("talabalar").style.display = "none";
-    document.getElementById("qabul").style.display = "none";
+<!-- TALABALAR -->
+<div class="section" id="students">
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="🔍 Qidirish..." onkeyup="searchText()">
+  </div>
+
+  <div class="card searchable">
+    <h2>ISFT Instituti Tarixi va Faoliyati</h2>
+  <p>
+    ISFT instituti o’z ishini <strong>2016-yildan</strong> Xalqaro biznes maktab sifatida boshlagan. 
+    2021-yilga kelib, MChJ «International School of Finance Technology and Science» 
+    o’z faoliyatini O’zbekiston Respublikasi Vazirlar Mahkamasi huzuridagi Ta’lim Sifatini Nazorat qilish Davlat Inspeksiyasi tomonidan berilgan 
+    <strong>№0035 raqamli Litsenziya</strong> bo’yicha <strong>“ISFT Instituti”</strong> brend nomi orqali oliygoh sifatida yuritadi.
+  </p>
+  <p>
+    ISFT instituti <strong>Hemis dasturiga ulangan</strong> va barcha talabalar Hemis dasturida mavjud. 
+    Shuningdek, institut o’zining mobil ilovasini ishlab chiqqan: <strong>ISFT LMS</strong> yoki <strong>ISFT MOBILE</strong> deb yuritiladi. 
+    Mobile ilova Hemis dasturi bilan integratsiya qilingan, ya’ni bir-biriga ulanadi. Shu sababli talaba Hemis dasturiga alohida kirishi shart emas.
+  </p>
+  <p>
+    Agar talabani haqiqatan Hemisga kiritilganligini tekshirmoqchi bo‘lsa, <a href="https://my.gov.uz" target="_blank">my.gov.uz</a> saytiga o‘tib, 
+    “O’qish joyidan ma’lumotnoma” bo’limidan tekshirishi mumkin.
+  </p>
+  <p>
+    ISFT instituti <strong>2024-2025 o’quv yilida akreditasiyadan o’tgan</strong> va ilk kunduzgi ta’lim 3000+ bitiruvchilarini diplom bilan taqdirlagan. 
+    2025-2026 o’quv yilida esa 7000+ talaba bitirishi kutilyapti.
+  </p>
+  </div>
+  <div class="card searchable">
+    <h2>ISFT Instituti Baholash Mezonlari</h2>
+  <p>
+    Talaba o’qish jarayonida <strong>Oraliq Nazorat</strong> baholarini olishi shart va <strong>Yakuniy Imtihon</strong>larni topshirishi kerak.
+  </p>
+  <ul>
+    <li>Oraliq Nazoratdan <strong>minimum 12 ball</strong>, <strong>maximum 30 ball</strong> olinishi mumkin.</li>
+    <li>Yakuniy Imtihondan <strong>minimum 28 ball</strong>, <strong>maximum 70 ball</strong> olinishi mumkin.</li>
+  </ul>
+  <p>
+    Oraliq va yakuniy baholar <strong>umumiy hisoblanib</strong>, talabaning <strong>O’zlashtirish bahosi</strong> chiqadi.
+  </p>
+  <p>
+    <em>Misol:</em> 12 ball (Oraliq Nazorat) + 28 ball (Yakuniy Imtihon) = 40 ball (O’zlashtirish bahosi)
+  </p>
+  </div>
+  <div class="card searchable">
+    <h2>Rahbariyat</h2>
+    <p>
+  <ul>
+    <li><strong>Institut rektori:</strong> Niyazmetov Mansur Nurmatovich</li>
+    <li><strong>Vaqtincha rektor vazifasida:</strong> G’ulomov Ibrohim Rustam o’g’li <em>(hujjatlarda Niyazmetov M.R deb yuritiladi)</em></li>
+    <li><strong>O’quv ishlari bo’yicha prorektor:</strong> Temirov Anvar Amirovich</li>
+    <li><strong>Moliya-iqtisod ishlar bo’yicha prorektor:</strong> Sharipov Asliddin</li>
+    <li><strong>Registr ofisi boshlig’i:</strong> Baratov Ma’ruf</li>
+    <li><strong>Imtihon bo’limi boshlig’i:</strong> Abdusharifov Zafar</li>
+    <li><strong>Bosh yurist-konsult:</strong> Abdusalimov Ma’murjon</li>
+  </ul>
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Rahbariyat xonalari</h2>
+    <p>
+      <h3>Qabul va bo‘limlar bo‘yicha ma’lumot</h3>
+
+  <p>
+    Agar rektor bilan uchrashmoqchi bo‘lsa, <strong>Asosiy binoga qabul xonaga</strong> kelib, 
+    uchrashuvga yozilish kerak. <strong>Seshanba va Payshanba</strong> qabul kunlari hisoblanadi.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Buxgalteriya:</strong> Asosiy bino, 201-xona.<br>
+      Ish kunlari: Dushanbadan Jumagacha, 09:00–17:00
+    </li>
+    <li>
+      <strong>Yurist:</strong> Asosiy bino, 101-xona.<br>
+      Ish kunlari: Dushanbadan Jumagacha, 10:00–16:00
+    </li>
+    <li>
+      <strong>Arxiv bo‘limi:</strong> Asosiy bino, Padvalda<br>
+      Ish kunlari: Dushanbadan Jumagacha, 9:00–15:00
+    </li>
+    <li>
+      <strong>O‘quv ishlari bo‘yicha prorektor:</strong> Eco bozor qarshisidagi ECO–1 bino, 601-xona.<br>
+      Ish kunlari: Dushanbadan Jumagacha, qabullariga kelib yozilish kerak
+    </li>
+    <li>
+      <strong>Sirtqi bo’lim rahbari Baratov Ma'ruf:</strong> ECO–1 bino, 105-xona.<br>
+      Ish kunlari: Dushanbadan Jumagacha, 9:00–17:00<br>
+      Shanba: 9:00–14:00
+    </li>
+    <li>
+      <strong>Imtihon bo‘limi:</strong> ECO–1 bino, 606-xona.<br>
+      Ish kunlari: Dushanbadan Jumagacha, 10:00–16:00<br>
+      Shanba kuni imtihonlar olinmaydi
+    </li>
+  </ul>
+    </p>
+  </div>
+  <div class="card searchable">
+     <h2>Binolar va manzillari</h2>
+  <ul>
+    <li>
+      <strong>Asosiy bino 1:</strong> Toshkent shahar, Mirzo-Ulug'bek tumani, Buyuk Ipak yo'li ko'chasi, 58
+    </li>
+    <li>
+      <strong>O'quv bino - Eco-1 bino:</strong> Toshkent shahar, Mirzo-Ulug'bek tumani, Bahor MFY 102/5 (Eco1 va Eco2 binolari yonma-yon joylashgan)
+    </li>
+    <li>
+      <strong>O'quv bino - Eco-2 bino:</strong> Eco-1 binoning yonida
+    </li>
+    <li>
+      <strong>O'quv bino - Havas bino:</strong> Toshkent viloyati, Qibray tumani, Universitet ko'chasi, 7
+    </li>
+    <li>
+      <strong>Samarqand filiali:</strong> Samarqand shahar, Mirzo Bedil ko'chasi, 24-uy
+    </li>
+  </ul>
+  </div>
+  <div class="card searchable">
+    <h2>Yo’nalishlar haqida ma’lumot</h2>
+    <h2>Ta’lim yo‘nalishlari bo‘yicha umumiy ma’lumot</h2>
+
+  <p>
+    2021-yildan boshlab kunduzgi va sirtqi ta’lim yo‘nalishlari bo‘yicha 
+    <strong>3 ta fakultet</strong> doirasida talabalar qabul qilingan bo‘lib, 
+    hozirgi kunda <strong>18 dan ziyod ta’lim yo‘nalishlari</strong> mavjud.
+  </p>
+
+  <p>
+    2024-yilda O‘zbekiston Respublikasi Vazirlar Mahkamasining 
+    <strong>27-martdagi 157-son qarori</strong> asosida ta’lim standartlari va 
+    yo‘nalishlarini qayta ko‘rib chiqish jarayoni boshlanganligi to‘g‘risida 
+    rasmiy hujjat mavjud bo‘lib, ushbu jarayon ta’lim standartlarini 
+    yanada takomillashtirishni nazarda tutadi.
+  </p>
+
+  <p>
+    Shunga muvofiq, <strong>2023–2024-o‘quv yilida</strong> o‘qishga kirgan 
+    <em>Pedagogika va psixologiya</em> ta’lim yo‘nalishi klassifikatsiya raqamlari 
+    qayta belgilandi hamda ushbu yo‘nalish:
+  </p>
+
+  <ul>
+    <li>Pedagogika (tarbiya fani o‘qituvchisi)</li>
+    <li>Psixologiya (tarmoqlar va sohalar bo‘yicha)</li>
+  </ul>
+
+  <p>
+    ko‘rinishida <strong>alohida ta’lim yo‘nalishlariga ajratildi</strong>.
+  </p>
+
+  <p>
+    <strong>2025–2026-o‘quv yillari</strong> uchun sirtqi ta’lim shakli 
+    O‘zbekiston Respublikasi Prezidentining 
+    <strong>PF–76-son Farmoni</strong> asosida qabul jarayonlarida yakunlangan.
+  </p>
+
+  <p>
+    Biroq ushbu davrga qadar sirtqi ta’lim shaklida o‘qishga qabul qilingan 
+    talabalar belgilangan tartibda o‘qishlarini yakunlab olishlari mumkin.
+  </p>
+
+  <p>
+    <strong>2025–2026-o‘quv yili</strong> uchun masofaviy ta’lim shakli ochilgan 
+    bo‘lib, hozirgi kunda <strong>10 ta ta’lim yo‘nalishi</strong> bo‘yicha 
+    talabalar tahsil olib kelmoqdalar.
+  </p>
+  </div>
+  
+  <div class="card searchable">
+    <h2>Sirtqi ta‘lim yo‘nalishlar</h2>
+
+  <h3>2021-yil ochilgan</h3>
+  <ul>
+    <li>UOS BA (Hons) – Xalqaro buxgalteriya va moliya (hozirda Buxgalteriya hisobi va moliya) – <b>o‘z, rus, ingliz</b></li>
+    <li>UOS BA (Hons) – Biznes va menejment – <b>o‘z, rus, ingliz</b></li>
+    <li>60412200 – Xalqaro menejment boshqaruv – <b>o‘z, rus, ingliz</b>(hozirda Moliya sohasida boshqaruv)</li>
+  </ul>
+
+  <h3>2022-yil ochilgan</h3>
+  <ul>
+    <li>60110100 – Pedagogika va psixologiya – <b>o'z</b></li>
+    <li>60110500 – Boshlang‘ich ta’lim – <b>o'z</b></li>
+    <li>60110200 – Maktabgacha ta’lim – <b>o'z</b></li>
+    <li>60111800 – Xorijiy til va adabiyoti: Ingliz tili – <b>o'z</b></li>
+  </ul>
+
+  <h3>2023-yil ochilgan</h3>
+  <ul>
+    <li>60610200 – Axborot tizimlari va texnologiyalari – <b>o'z, rus</b></li>
+    <li>60310900 – Psixologiya – <b>o'z, rus</b></li>
+    <li>60110100 – Pedagogika (Tarbiya fani) – <b>o'z, rus</b></li>
+    <li>60310100 – Iqtisodiyot – <b>o'z, rus</b></li>
+    <li>60410500 – Bank ishi va auditi – <b>o'z, rus</b></li>
+    <li>60310400 – Iqtisodiy xavfsizlik – <b>o'z</b></li>
+    <li>60310500 – Raqamli iqtisodiyot – <b>o'z</b></li>
+    <li>60412500 – Marketing – <b>o'z, rus</b></li>
+  </ul>
+
+  <h3>2024-yil ochilgan</h3>
+  <ul>
+    <li>60310200 – Xalqaro munosabatlar – <b>o'z, rus</b></li>
+    <li>60610200 – Axborot xavfsizligi – <b>o'z</b></li>
+    <li>60230100 – Filologiya va tillarni o'qitish – <b>o'z - sirtqi ta‘lim mavjud emas</b></li>
+  </ul>
+
+  <h3>Jami sirtqi ta’lim yo’nalishlar</h3>
+  <ul>
+    <li> 1. UOS BA (Hons) – Xalqaro buxgalteriya va moliya (hozirda Buxgalteriya hisobi va moliya) – <b>o‘z, rus, ingliz</b></li>
+    <li> 2. UOS BA (Hons) – Biznes va menejment – <b>o‘z, rus, ingliz</b></li>
+    <li> 3. 60412200 – Moliya sohasida boshqaruv – <b>o‘z, rus, ingliz</b></li>
+    <li> 4. 60110900 – Xorijiy til va adabiyoti: Ingliz tili – <b>o'z</b></li>
+    <li> 5. 60110500 – Boshlang‘ich ta’lim – <b>o'z – 5-yillik staj talab qilinadi</b></li>
+    <li> 6. 60110200 – Maktabgacha ta’lim – <b>o'z</b></li>
+    <li> 7. 60610200 – Axborot xavsizligi – <b>o'z</b></li>
+    <li> 8. 60610200 – Axborot tizimlari va texnologiyalari – <b>o'z, rus</b></li>
+    <li> 9. 60310900 – Psixologiya – <b>o'z, rus</b></li>
+    <li> 10. 60110100 – Pedagogika (Tarbiya fani) – <b>o'z, rus</b></li>
+    <li> 11. 60310100 – Iqtisodiyot – <b>o'z, rus</b></li>
+    <li> 12. 60410500 – Bank ishi va auditi – <b>o'z, rus</b></li>
+    <li> 13. 60310400 – Iqtisodiy xavfsizlik – <b>o'z</b></li>
+    <li> 14. 60310500 – Raqamli iqtisodiyot – <b>o'z</b></li>
+    <li> 15. 60412500 – Marketing – <b>o'z, rus</b></li>
+    <li> 16. 60310200 – Xalqaro munosabatlar – <b>o'z, rus</b></li>
+  </ul>
+  </div>
+
+  <div class="card searchable">
+    <h2>Kunduzgi ta’lim yo‘nalishlar</h2>
+    <h3>Jami kunduzgi ta’lim yo‘nalishlar</h3>
+  <ul>
+    <li> 1. UOS BA (Hons) – Xalqaro buxgalteriya va moliya (hozirda Buxgalteriya hisobi va moliya) – <b>o‘z, rus, ingliz</b></li>
+    <li> 2. UOS BA (Hons) – Biznes va menejment – <b>o‘z, rus, ingliz</b></li>
+    <li> 3. 60412200 – Moliya sohasida boshqaruv – <b>o‘z, rus, ingliz</b></li>
+    <li> 4. 60110900 – Xorijiy til va adabiyoti: Ingliz tili – <b>o'z</b></li>
+    <li> 5. 60230100 – Filologiya va tillarni o'qitish – <b>o'z</b></li>
+    <li> 6. 60110500 – Boshlang‘ich ta’lim – <b>o'z</b></li>
+    <li> 7. 60110200 – Maktabgacha ta’lim – <b>o'z</b></li>
+    <li> 8. 60610200 – Axborot xavsizligi – <b>o'z</b></li>
+    <li> 9. 60610200 – Axborot tizimlari va texnologiyalari – <b>o'z, rus</b></li>
+    <li> 10. 60310900 – Psixologiya – <b>o'z, rus</b></li>
+    <li> 11. 60110100 – Pedagogika (Tarbiya fani) – <b>o'z, rus</b></li>
+    <li> 12. 60310100 – Iqtisodiyot – <b>o'z, rus</b></li>
+    <li> 13. 60410500 – Bank ishi va auditi – <b>o'z, rus</b></li>
+    <li> 14. 60310400 – Iqtisodiy xavfsizlik – <b>o'z</b></li>
+    <li> 15. 60310500 – Raqamli iqtisodiyot – <b>o'z</b></li>
+    <li> 16. 60412500 – Marketing – <b>o'z, rus</b></li>
+    <li> 17. 60310200 – Xalqaro munosabatlar – <b>o'z, rus</b></li>
+  </ul>
+  </div>
+
+ <div class="card searchable">
+    <h2>Masofaviy ta’lim yo‘nalishlar</h2>
+    <h3>Jami masofaviy ta’lim yo‘nalishlar</h3>
+  <ul>
+    <li> 1. UOS BA (Hons) – Buxgalteriya hisobi va moliya (o‘z / ru)</li>
+    <li> 2. UOS BA (Hons) – Biznes va menejment (o‘z / ru / eng)</li>
+    <li> 3. 60310300 – Psixologiya (o‘z / ru)</li>
+    <li> 4. 60410100 – Iqtisodiyot (o‘z / ru)</li>
+    <li> 5. 60310200 – Xalqaro munosabatlar (o‘z / ru)</li>
+    <li> 6. 60411200 – Marketing (o‘z / ru)</li>
+    <li> 7. 60410800 – Menejment (o‘z / ru)</li>
+    <li> 8. 60412200 – Moliya sohasida boshqaruv (o‘z / ru)</li>
+    <li> 9. 60410600 – Bank ishi (o‘z / ru)</li>
+    <li> 10. 60610100 – Axborot tizimlari va texnologiyalari (o‘z / ru)</li>
+  </ul>
+ </div>
+
+  <div class="card searchable">
+    <h2>Magistratura</h2>
+    <h3>Magistratura yo'nalishlar <b>Toshkent/Samarqand</b></h3>
+  <ul>
+    <li><b>Toshkent</b></li>
+    <li>70410506 – Davlat moliyaviy nazorati va auditi</li>
+    <li>70110901 – Xorijiy til va adabiyoti: Ingliz tili</li>
+    <li>70110102 – Pedagogika</li>
+    <li><b>Samarqand</b></li>
+    <li>70110102 – Pedagogika</li>
+    <li>70410506 – Davlat moliyaviy nazorati va auditi</li>
+    <li>70110901 – Xorijiy til va adabiyoti</li>
+  </ul>
+  </div>
+  
+  <div class="card searchable">
+    <h2>ISFT Instituti Shartnoma va To‘lov Tartibi</h2>
+  <p>
+    ISFT instituti tomonidan o’qishga kirganda berilgan shartnoma <strong>o’qish tugaguncha amal qiladi</strong>. Shartnoma faqat 1 marotaba beriladi.
+  </p>
+  <h3>Kurslar va yo'nalishlar kesimida kontrakt to'lov summalari</h3>
+  <p>
+    <ul>
+        <li><b>Kunduzgi ta’lim</b></li>
+        <li>1. Kunduzgi xalqaro yo’nalishlar uchun – <b>20 600 000 UZS</b></li>
+        <li>2. Kunduzgi mahalliy yo’nalishlar uchun – <b>18 952 000 UZS</b></li>
+        <li><b>Sirtqi ta’lim</b></li>
+        <li>Barcha sirtqi yo’nalish uchun – <b>13 596 000 UZS</b></li>
+        <li><b>Eslatma!</b> – 5-kurs uchun ham kontrakt to’lovi 13 596 000 UZSni tashkil etadi, shartnomaga asosan o’qishni tamomlaguncha 9 000 000 UZS bo’lishi kerak edi-ku deyilsa, shartnomaning 3,5-bandiga muvoffiq kontrakt to’lovi hisoblangan deyiladi.</li>
+        <li><b>Masofaviy ta’lim</b></li>
+        <li>Barcha masofaviy ta’lim uchun – <b>9 375 000 UZS</b></li>
+    </ul>
+  </p>
+  <h3>1. Shartnomaning Amal Qilish Davri</h3>
+  <p>
+    2023-2024 o'quv yilining kuzgi semestridan boshlab 5 dan 10 akademik yilgacha Talabaga bakalavriat dasturi sirtqi yo’nalishi bo'yicha xizmatlar ko'rsatiladi. To’lovchi ushbu shartnomaga muvofiq o'qish haqini to'laydi. Agar kursdan kursga muvaffaqiyatli o‘tgan va akademik ta’til olinmagan bo‘lsa, o‘qish muddati 5 yilni tashkil etadi. Masalan, o’quv jarayoni 2028-2029 o’quv yilida yakunlanadi.
+  </p>
+
+  <h3>2. To’lov va Davomat Shartlari</h3>
+  <ul>
+    <li>Talaba to’lovlarni vaqtida amalga oshirmasa yoki davomatida muammo bo‘lsa, <strong>imtihonlarga kirishi cheklanishi</strong> mumkin.</li>
+    <li>Maksimal o’quv soatiga qatnashmaslik 20% dan oshsa, talabani imtihonga qabul qilmaslik mumkin.</li>
+    <li>To’lov kontrakti har yili <strong>BHM</strong>ga qarab o’zgaradi:
+      <ul>
+        <li>Kunduzgi ta’lim: 50 BHM</li>
+        <li>Sirtqi ta’lim: 33 BHM</li>
+        <li>Masofaviy ta’lim: 25 BHM</li>
+      </ul>
+    </li>
+    <li>Shartnomaning 3.5 bandiga ko‘ra, qonun hujjatlarida o‘zgartirish bo‘lsa, Institut bir tomonlama to‘lov narxini o‘zgartirish huquqiga ega. Talaba kamida 15 kun oldin xabardor qilinadi.</li>
+  </ul>
+
+  <h3>3. To‘lov Grafigi</h3>
+  <ul>
+    <li>Birinchi to‘lov: – 30-sentabr (agar shartnoma 20 sentyabrdan so‘ng taqdim etilsa, 10 kun ichida).</li>
+    <li>Ikkinchi to‘lov: – 1-dekabr</li>
+    <li>Uchinchi to‘lov: – 1-mart</li>
+    <li>Yakuniy to‘lov: – 1-may</li>
+  </ul>
+
+  <h3>4. To‘lovni Qaytarish Shartlari</h3>
+  <ul>
+    <li>Shartnoma kuchga kirgandan so‘ng va o‘qish davri boshlanganidan keyin oldindan to‘langan pul miqdori <strong>to‘liq qaytarilmaydi</strong>.</li>
+    <li>Keyingi o'quv davri boshlanishidan 10 kalendar kun oldin so‘rov yuborilmasa, to‘lov qaytarilmaydi.</li>
+  </ul>
+
+  <h3>5. Kechiktirilgan To‘lovlar va Jarima</h3>
+  <ul>
+    <li>2021-2025 o’quv yillarida kechiktirilgan to‘lov uchun 0,5% jarima olinardi, maksimal 10% gacha. (2025-2026 yilda penyalar bekor qilindi, ammo avval hisoblangan penyalar saqlanadi)</li>
+  </ul>
+  </div>
+  <div class="card education-credit">
+  <h2>Ta'lim krediti</h2>
+  <p>
+    📌 Sirtqi ta'lim kreditlari 2024-yil aprel-may oylaridan boshlab to'xtatildi.  
+    Prezidentning 2024-yil 23-maydagi farmoni bilan faqat kunduzgi ta'lim uchun kredit ajratilishi belgilandi.
+  </p>
+  <p>
+    📌 2024-2025 o’quv yillarida ISFT insituti va Aloqa Bank o’rtasida shartnoma imzolandi va aynan ISFT insituti talabalariga imtiyozli kreditlar ajratildi.  
+    • Dastlabki 12 oy uchun yillik 14%  
+    • 13-oydan boshlab yillik 22%  
+    Foizlar kredit qoldig'iga nisbatan hisoblanadi.
+  </p>
+  <p>
+    📌 2025-2026 o’quv yili uchun imtiyozli kredit ajratilmadi.  
+    Ajratilishi reja qilinsa, rasmiy kanallarda e’lon qilinadi.
+  </p>
+  </div>
+  <div class="card searchable">
+    <h2>Arizalar yozish tartibi</h2>
+    <p>
+      Arizalar yozilishiga ko’ra Ichki va tashqi perevodlar, Familiya o’zgartirish bo’yicha, Chaqiruv yoki guruh o’zgartirish bo’yicha, Chegirmalar bo’yicha, To’lov muddatini uzaytirish bo’yicha, To’lov qayatarish bo’yicha, Akademik ta’til, TSCH(muzlatish) va O’qishni bekor qilish bo’yicha yoziladi. Arizalar online va offline ko’rinishida qabul qilinadi.
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Online olinadigan arizalar</h2>
+    <p>Chaqiruv yoki guruhni o’zgartirish bo’yicha asos (nima sababdan o’zgartirayotganligini tasdiqlovchi hujjat) bilan birgalikda telegram bot orqali; Familiya o’zgartirish bo’yicha arizalar va asos hujjat (FHDYO ya’ni ZAGS qog’ozi, yangi pasporti oldi va orqasi tiniq rasmga olingan holda) bilan telegram bot orqali, istisno holatlarda kelib yozishi ham mumkin. Chaqiruv yoki guruh o’zgartish bo’yicha arizalar o’quv ishlari bo’yicha prorektor A.Temirov nomiga yoziladi, Familiya o’zgartirish bo’yicha arizalar Insitut rektori M.R.Niyazmetov nomiga yoziladi.
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Offline olinadigan arizalar</h2>
+    <p>
+      Ichki va Tashqi perevodlar bo’yicha, Chegirmalar bo’yicha, To’lov muddatini uzaytirish bo’yicha, Akademik ta’til, Tsch(muzlatish) bo’yicha va O’qishni bekor qilish bo’yicha. Offline olinadigan arizlar turiga qarab Asosiy va Eco1 binolarida olinadi.
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Asosiy binoga yoziladigan arizalar</h2>
+    <p>
+      Chegirmalar bo’yicha, To’lov muddatini uzaytirish bo’yicha, To’lovni qayatrish bo’yicha Buxgalteriyaga kelib ariza yoziladi. Akt sverka Hujjati Soliqdan so’ralsa online yoki offline tarzida olish mumkin bu uchun ariza yozilmaydi (206-xona).
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Eco–1 binoga yoziladigan arizalar</h2>
+    <p>
+      Ichki va Tashqi perevodlar bo’yicha, Akademik ta’til, Tsch(muzlatish) bo’yicha va O’qishni bekor qilish bo’yicha.(105-xona).
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Ichki va Tashqi perevodlar</h2>
+    <p>
+      Ichki va Tashqi perevodlar 15-iyuldan 5-avgustga qadar bo’lib o’tadi. Ichki perevodlar degani bu ISFT insituti ichki tartib qoidasiga binoan fakultet o’zgartirish hisoblanadi. Ko’rsatilgan vaqt orasida kelib ariza yoziladi. Faqatgina turdosh yo’nalishlarga ichki perevod qilish mumkin fanlar farqi 4 tadan oshmagan holatda. Fanlar farqi 4 tadan oshsa bunday holatda ariza rad etiladi yoki bitta kurs pasdan o’qishiga to’g’ri keladi.
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Tashqi perevod</h2>
+    <p>
+      Tashqi perevodlar ham ko’rsatilgan vaqt oralig’ida bo’lib o’tadi, bunda talabaga Reyting daftarcha (TRANSKRIPT) qilib beriladi qolgan ma’lumotlarni Topshiradigan Oliy ta’lim muassasadan oladi. Talabaning tashqi perevodi o’xshamay qolsa ya’ni o’tolmasa bizda o’qishini davom ettirishi mumkin. 
+    </p>
+  </div>
+  <div class="card searchable">
+    <h2>Chegirmalar</h2>
+     <ul>
+    <li>
+      <strong>👫 Er va xotin birga o‘qisa</strong> — <span class="percent">20%</span><br>
+      Yosh chegarasi: <b>mavjud emas</b><br>
+      <b>Kerakli hujjatlar:</b> 2 ta talabaning pasporti, ZAGS guvohnomasi, shartnomalar
+    </li>
+
+    <li>
+      <strong>👨‍👩‍👧 Ota yoki ona va farzand birga o‘qisa</strong> — <span class="percent">20%</span><br>
+      Yosh chegarasi: <b>mavjud emas</b><br>
+      <b>Kerakli hujjatlar:</b> pasport, tug‘ilganlik guvohnomasi (metrka), shartnomalar
+    </li>
+
+    <li>
+      <strong>👫 Aka/opa va uka/singil birga o‘qisa</strong> — <span class="percent">20%</span><br>
+      Yosh chegarasi: <b>30 yoshgacha</b> (30 yoshdan oshsa chegirma berilmaydi)<br>
+      <b>Kerakli hujjatlar:</b> pasport, tug‘ilganlik guvohnomasi (metrka), shartnomalar
+    </li>
+  </ul>
+
+  <h3>🎓 Rektor chegirmasi</h3>
+  <p>
+    Rektor chegirmasi mavjud. Talaba quyidagi asoslardan biri bo‘yicha hujjat bilan
+    <b>Asosiy bino – Qabul bo‘limi (Reseption)</b> ga murojaat qiladi:
+  </p>
+  <ul>
+    <li>Nogironlik to‘g‘risidagi hujjat</li>
+    <li>Boquvchisini yo‘qotganlik to‘g‘risidagi ma’lumotnoma</li>
+  </ul>
+  <p>
+    Qabul bo‘limi tomonidan tegishli mas’ul xonaga yo‘naltiriladi.
+  </p>
+  </div>
+  <div class="card searchable">
+    <h2>Aloqa uchun</h2>
+     <div class="city-contact">
+    <h3>Toshkent</h3>
+    <p><b>📞 Telefon:</b> <a href="tel:+998555083737">+998 55 508 37 37</a></p>
+    <p><b>🤖 Rasmiy Telegram bot:</b> <a href="https://t.me/isftstudnets_bot" target="_blank">@isftstudnets_bot</a></p>
+  </div>
+
+  <div class="city-contact">
+    <h3>Samarqand</h3>
+    <p><b>📞 Telefon:</b> <a href="tel:+998555123737">+998 55 512 37 37</a></p>
+    <p><b>🤖 Rasmiy Telegram bot:</b> <a href="https://t.me/isftsamarqand_bot" target="_blank">@isftsamarqand_bot</a></p>
+  </div>
+  <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
+</div>
+
+</main>
+
+<footer>
+  © ISFT Instituti — Rasmiy ma’lumotlar sahifasi
+</footer>
+
+<script>
+function openSection(id){
+  document.getElementById("home").style.display="none";
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function goHome(){
+  document.getElementById("home").style.display="block";
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+}
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+}
+function searchText(){
+  let q=document.getElementById("searchInput").value.toLowerCase();
+  document.querySelectorAll(".searchable").forEach(card=>{
+    card.style.display=card.innerText.toLowerCase().includes(q)?"block":"none";
+  });
 }
 </script>
-
 </body>
 </html>
-
