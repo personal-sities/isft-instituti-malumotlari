@@ -160,6 +160,20 @@ footer{
   opacity:.7;
   font-size:14px;
 }
+  .percent{
+    color:var(--primary);
+    font-weight:700;
+  }
+
+  .toggle{
+    background:#fff;
+    color:#8b0000;
+  }
+
+  body.dark .toggle{
+    background:#8b0000;
+    color:#fff;
+  }
   
 </style>
 </head>
@@ -167,7 +181,7 @@ footer{
 <body>
 <header>
   <div class="logo">
-    <images src="images/logo.svg" alt="ISFT Logo">
+    <img src="images/logo.svg" alt="ISFT Logo">
     <h1>ISFT Instituti</h1>
   </div>
   <div class="toggle" onclick="toggleTheme()">🌙 / ☀️</div>
@@ -846,6 +860,7 @@ function searchText(){
 </script>
 </body>
 </html>
+
 
 
 
