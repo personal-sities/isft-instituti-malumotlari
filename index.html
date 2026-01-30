@@ -123,6 +123,7 @@ main{
   padding:25px;
   margin-bottom:25px;
   box-shadow:0 6px 18px rgba(0,0,0,.15);
+  
 }
 
 /* SEARCH */
@@ -160,6 +161,22 @@ footer{
   opacity:.7;
   font-size:14px;
 }
+  h1::first-letter,
+  h2::first-letter,
+  h3::first-letter,
+  p::first-letter,
+  .btn::first-letter {
+  color: var(--primary);
+  }
+
+  body.dark h1::first-letter,
+  body.dark h2::first-letter,
+  body.dark h3::first-letter,
+  body.dark p::first-letter,
+  body.dark .btn::first-letter {
+  color: #ffffff;
+  }
+  
 </style>
 </head>
 
@@ -244,6 +261,33 @@ footer{
   </p>
   </div>
   <div class="card searchable">
+    <h2>Shartnomaning kerakli bandlari</h2>
+    <p>
+      <b>2.2.4-bandi</b>
+      O'qish uchun to'lov qarzlari mavjud bo'lgan taqdirda yoki o'quv soatlariga tashrif buyurmaslikning maksimal miqdori 20% dan ko’p holatlarda Talabaning imtihonlarga
+kirishini cheklash. Talabalarni imtihonlarga qabul qilish uchun zarur bo'lgan o'quv soatlari soni qo’shimcha Institutning Ichki Nizomi bilan belgilanadi va tartibga solinadi;
+    </p>
+    <p>
+      <b>3.1-bandi</b>
+      Kontrakt to'lovi har o'quv yili uchun <b>BHM</b>ga qarab hisoblanadi.
+      <b>Kunduzgi - BHMning 50 barobari
+         Sirtqi - BHMning 33 barobari
+         Masofaviy - BHMning 25 barobari</b>
+      O'quv yili uchun hisoblanadigan kontrakt to'lovi har o'quv yilining boshida ya'no <b>15-avgust</b> sanasida amaldagi BHM miqdori bo'yicha hisoblanadi.
+      <b>Eslatma❗️</b>
+      BHM nima - Bazaviy hisoblash miqdori shuningdek, Eng kam oylik ish haqqi.
+    </p>
+    <p>
+      <b>5.3-bandi</b>
+       To'lov kechiktirilgan taqdirda, talaba kechiktirilgan har bir kalendar kuni uchun to'lanmagan qismning <b>0,5%</b> miqdorida, qarzning 10% dan ko'p bo'lmagan miqdorda jarima (penya) to'lashga majbur bo'lar edi, lekin <b>2025-2026-o'quv yilidan PENIYA yozish bekor qilingan.</b>
+    </p>
+    <p>
+      <b>5.4-bandi</b>
+      O'qish uchun to'lovi 15 kalendar kundan ortiq kechiktirilgan taqdirda, Institut Talabani o'qishdan chetlashtirish to'g'risida qaror qabul qilish huquqiga ega;
+    </p>
+  </div>
+      
+  <div class="card searchable">
     <h2>ISFT Instituti Baholash Mezonlari</h2>
   <p>
     Talaba o’qish jarayonida <strong>Oraliq Nazorat</strong> baholarini olishi shart va <strong>Yakuniy Imtihon</strong>larni topshirishi kerak.
@@ -263,8 +307,8 @@ footer{
     <h2>Rahbariyat</h2>
     <p>
   <ul>
-    <li><strong>Institut rektori:</strong> Niyazmetov Mansur Nurmatovich</li>
-    <li><strong>Vaqtincha rektor vazifasida:</strong> G’ulomov Ibrohim Rustam o’g’li <em>(hujjatlarda Niyazmetov M.R deb yuritiladi)</em></li>
+    <li><strong>Institut rektori:</strong> Niyazmetov Mansur Ro'zmetovich</li>
+    <li><strong>Vaqtincha rektor vazifasida:</strong> G’ulomov Ibrohim Rustamovich <em>(hujjatlarda Niyazmetov M.R deb yuritiladi)</em></li>
     <li><strong>O’quv ishlari bo’yicha prorektor:</strong> Temirov Anvar Amirovich</li>
     <li><strong>Moliya-iqtisod ishlar bo’yicha prorektor:</strong> Sharipov Asliddin</li>
     <li><strong>Registr ofisi boshlig’i:</strong> Baratov Ma’ruf</li>
@@ -691,3 +735,4 @@ function searchText(){
 </script>
 </body>
 </html>
+
