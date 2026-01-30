@@ -187,7 +187,7 @@ footer{
     <button class="btn" onclick="openSection('admission')">
       Qabul bo‘limi
     </button>
-    <button class="btn" onclick="openSection('LMS')">
+    <button class="btn" onclick="openSection('platforma')">
       LMS Platforma
     </button>
   </div>
@@ -699,7 +699,7 @@ kirishini cheklash. Talabalarni imtihonlarga qabul qilish uchun zarur bo'lgan o'
   <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
 </div>
 
-<div class="section" id="LMS">
+<div class="section" id="platforma">
   <div class="search">
     <input type="text" id="searchInput" placeholder="🔍 Qidirish..." onkeyup="searchText()">
 </div>
@@ -895,8 +895,24 @@ Asosiy oynaning tepa qismida viloyat va ta’lim shaklini tanlasa bo’ladi</li>
     bo’limi joylashgan.
     </p>
   </div>
-   <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>  
 
+  <div class="card searchable">
+    <h2>Aloqa uchun</h2>
+     <div class="city-contact">
+    <h3>Toshkent</h3>
+    <p><b>📞 Telefon:</b> <a href="tel:+998555083737">+998 55 508 37 37</a></p>
+    <p><b>🤖 Rasmiy Telegram bot:</b> <a href="https://t.me/isftstudnets_bot" target="_blank">@isftstudnets_bot</a></p>
+  </div>
+
+  <div class="city-contact">
+    <h3>Samarqand</h3>
+    <p><b>📞 Telefon:</b> <a href="tel:+998555123737">+998 55 512 37 37</a></p>
+    <p><b>🤖 Rasmiy Telegram bot:</b> <a href="https://t.me/isftsamarqand_bot" target="_blank">@isftsamarqand_bot</a></p>
+  </div>
+  <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
+</div>
+
+  
 </main>
 
 <footer>
@@ -925,6 +941,7 @@ function searchText(){
 </script>
 </body>
 </html>
+
 
 
 
