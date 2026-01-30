@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>ISFT Instituti</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1d2671, #c33764);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: #fff;
+    width: 95%;
+    max-width: 1000px;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.header {
+    text-align: center;
+}
+
+.header img {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #1d2671;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1d2671, #c33764);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.section {
+    display: none;
+    margin-top: 30px;
+}
+
+.card {
+    background: #f7f9fc;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    color: #c33764;
+}
+
+.search input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 25px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.back {
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <img src="logo.png" alt="ISFT Instituti Logo">
+        <h1>ISFT Instituti ma'lumotlar bazasiga xush kelibsiz</h1>
+    </div>
+
+    <div class="buttons">
+        <button class="btn" onclick="showSection('talabalar')">
+            Talabalar bilan ishlash bo‘limi
+        </button>
+        <button class="btn" onclick="showSection('qabul')">
+            Qabul bo‘limi
+        </button>
+    </div>
+
+    <!-- TALABALAR BO‘LIMI -->
+    <div id="talabalar" class="section">
+
+        <div class="search">
+            <input type="text" placeholder="Ma’lumotlarni qidirish...">
+        </div>
+
+        <div class="card">
+            <h2>📚 Yo‘nalishlar</h2>
+            <p><b>Assalomu alaykum, hozirgi vaqtda ISFT Instituti yo‘nalishlari:</b></p>
+            <ul>
+                <li>UOS BA (Hons) – Buxgalteriya hisobi va moliya</li>
+                <li>UOS BA (Hons) – Biznes va menejment</li>
+                <li>60310200 – Xalqaro munosabatlar</li>
+                <li>60412200 – Moliya sohasida boshqaruv</li>
+                <li>60110100 – Pedagogika</li>
+                <li>60110400 – Boshlang‘ich ta’lim (sirtqi, 5-yillik staj)</li>
+                <li>60110200 – Maktabgacha ta’lim</li>
+                <li>60310300 – Psixologiya</li>
+                <li>70110901 – Xorijiy til va adabiyoti (sirtqi mavjud emas)</li>
+                <li>60230100 – Filologiya va tillarni o‘qitish (sirtqi mavjud emas)</li>
+                <li>60410100 – Iqtisodiyot</li>
+                <li>60410600 – Bank ishi</li>
+                <li>60411200 – Marketing</li>
+                <li>60610200 – Axborot xavfsizligi</li>
+                <li>60610100 – Axborot tizimlari va texnologiyalari</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🧑‍🎓 Amaliyot masalasi</h2>
+            <p><b>Assalomu alaykum, hurmatli talaba!</b></p>
+            <p>Amaliyot qilish uchun quyidagi ma’lumotlarni yuboring:</p>
+            <ul>
+                <li>ID</li>
+                <li>F.I.O.</li>
+                <li>Kurs</li>
+                <li>Telefon raqam</li>
+                <li>Ta’lim shakli</li>
+                <li>Ta’lim tili</li>
+                <li>Yo‘nalish</li>
+                <li>Amaliyot o‘tamoqchi bo‘lgan joy manzili (aniq)</li>
+                <li>Boshlanish sanasi</li>
+                <li>Amaliyot muddati (maksimal 3 oy)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>⚠️ Platforma ishlamayotganda</h2>
+            <p>
+                Assalomu alaykum, hozirda platformamizda profilaktika ishlari olib borilmoqda.
+                Siz hozircha:
+            </p>
+            <p>❌ intranet.isft.uz</p>
+            <p>❌ ISFT LMS ilovasi</p>
+            <p>
+                orqali kira olmaysiz.  
+                ✅ <b>lms.isft.uz</b> sayti orqali shaxsiy platformangizga kirishingiz mumkin.
+            </p>
+        </div>
+
+        <div class="back">
+            <button class="btn" onclick="goBack()">Orqaga</button>
+        </div>
+    </div>
+
+    <!-- QABUL BO‘LIMI -->
+    <div id="qabul" class="section">
+        <div class="card">
+            <h2>Qabul bo‘limi</h2>
+            <p>Qabul yoz oyida boshlanadi.</p>
+            <p><b>Telefon:</b> +998 55 506 17 17</p>
+        </div>
+
+        <div class="back">
+            <button class="btn" onclick="goBack()">Orqaga</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function showSection(id) {
+    document.getElementById("talabalar").style.display = "none";
+    document.getElementById("qabul").style.display = "none";
+    document.getElementById(id).style.display = "block";
+}
+
+function goBack() {
+    document.getElementById("talabalar").style.display = "none";
+    document.getElementById("qabul").style.display = "none";
+}
+</script>
+
+</body>
+</html>
