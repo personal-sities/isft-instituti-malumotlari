@@ -10,12 +10,20 @@
   --primary:#8b0000;
   --bg:#ffffff;
   --text:#1a1a1a;
-  --card:#f6f6f6;
+  --card:#f0f0f0;
+  --card-text:#111111;
+  --subtext:#444444;
+  --border:#cccccc;
+  --input-bg:#ffffff;
 }
 body.dark{
   --bg:#0f0f0f;
   --text:#f1f1f1;
   --card:#1c1c1c;
+  --card-text:#e8e8e8;
+  --subtext:#aaaaaa;
+  --border:#333333;
+  --input-bg:#1a1a1a;
 }
 *{box-sizing:border-box}
 body{
@@ -108,7 +116,9 @@ main{
 .telegram-box p{
   margin:8px 0;
   font-size:15px;
+  color:var(--card-text);
 }
+.telegram-box b,.telegram-box strong{color:var(--card-text);}
 
 /* SECTIONS */
 .section{
@@ -119,11 +129,15 @@ main{
 }
 .card{
   background:var(--card);
+  color:var(--card-text);
   border-radius:14px;
   padding:25px;
   margin-bottom:25px;
-  box-shadow:0 6px 18px rgba(0,0,0,.15);  
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
+.card h2,.card h3{color:var(--card-text);}
+.card p,.card li,.card label{color:var(--card-text);}
+.card a{color:var(--primary);}
 
 /* SEARCH */
 .search{
@@ -135,6 +149,8 @@ main{
   font-size:16px;
   border-radius:10px;
   border:2px solid var(--primary);
+  background:var(--input-bg);
+  color:var(--text);
 }
 
 /* TABLE */
@@ -144,9 +160,10 @@ table{
   margin-top:15px;
 }
 th,td{
-  border:1px solid #ccc;
+  border:1px solid var(--border);
   padding:10px;
   text-align:left;
+  color:var(--card-text);
 }
 th{
   background:var(--primary);
@@ -181,7 +198,16 @@ footer{
 <body>
 <header>
   <div class="logo">
-    <img src="images/isft.png" alt="ISFT Logo">
+    <div style="width:60px;height:60px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg viewBox="0 0 60 60" width="54" height="54" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="60" rx="8" fill="#8b0000"/>
+        <rect x="4" y="4" width="52" height="52" rx="6" fill="#fff"/>
+        <rect x="8" y="8" width="44" height="44" rx="4" fill="#8b0000"/>
+        <text x="30" y="26" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="13" fill="#fff">ISFT</text>
+        <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="600" font-size="7" fill="#ffcccc">INSTITUTI</text>
+        <rect x="12" y="42" width="36" height="2" rx="1" fill="#ffcccc" opacity="0.6"/>
+      </svg>
+    </div>
     <h1>ISFT Instituti</h1>
   </div>
   <div class="toggle" onclick="toggleTheme()">🌙 / ☀️</div>
@@ -270,8 +296,8 @@ footer{
 
   <div id="qaContainer"></div>
 
-  <div style="padding:10px 0;">
-    <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
+  <div style="position:sticky;bottom:0;background:var(--bg);padding:12px 0;border-top:1px solid var(--border);z-index:100;margin-top:10px;">
+    <button class="btn" onclick="goHome()" style="font-size:15px;padding:12px 28px;">⬅ Asosiy sahifa</button>
   </div>
 </div>
 
@@ -281,11 +307,37 @@ footer{
     <input type="text" id="searchInput" placeholder="🔍 Qidirish..." onkeyup="searchText()">
   </div>
 
-  <!-- Qabul bo'limi kartasi -->
-  <div class="card searchable" style="border-left:4px solid #4a8cf5;cursor:pointer;" onclick="openSection('admission')">
-    <h2>📌 Qabul bo'limi ma'lumotlari →</h2>
-    <p style="color:#8fa3b8;font-size:13px;">Qabul jarayoni, kontrakt summalari, grant, imtihon, perevod bo'yicha to'liq ma'lumot. Ko'rish uchun bosing.</p>
+  <!-- Boshqaruv admin panel for students section -->
+  <div style="text-align:right;margin-bottom:8px;">
+    <button onclick="toggleStudentsAdmin()" style="background:none;border:1px solid var(--border);color:var(--subtext);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;">🔧 Boshqaruv</button>
   </div>
+  <div class="card" id="studentsAdminPanel" style="border:2px dashed #4a7ab5;display:none;">
+    <h2 style="margin-top:0;">🔧 Boshqaruv paneli</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="btn" onclick="showStudentsAddForm()" style="background:#2ed573;font-size:14px;padding:10px 16px;">➕ Yangi karta qo'shish</button>
+      <button class="btn" onclick="document.getElementById('studentsImportFile').click()" style="background:#ffa502;font-size:14px;padding:10px 16px;">📥 TXT import</button>
+      <input type="file" id="studentsImportFile" accept=".txt" style="display:none" onchange="importStudentsFromFile(this)">
+      <button class="btn" onclick="exportStudentsTxt()" style="background:#a55eea;font-size:14px;padding:10px 16px;">📤 Export (TXT)</button>
+      <button class="btn" onclick="closeStudentsAdmin()" style="background:#ff4757;font-size:14px;padding:10px 16px;">✖ Yopish</button>
+    </div>
+    <div id="studentsAddForm" style="display:none;background:var(--bg);border-radius:10px;padding:16px;margin-bottom:12px;border:1px solid var(--border);">
+      <h3 style="margin-bottom:10px;font-size:14px;">📝 Yangi karta qo'shish</h3>
+      <div style="margin-bottom:8px;">
+        <label style="font-size:12px;display:block;margin-bottom:4px;">Sarlavha:</label>
+        <input type="text" id="stuNewQ" placeholder="Sarlavha..." style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--input-bg);color:var(--text);font-size:13px;outline:none;">
+      </div>
+      <div style="margin-bottom:10px;">
+        <label style="font-size:12px;display:block;margin-bottom:4px;">Mazmun:</label>
+        <textarea id="stuNewA" placeholder="Mazmunini yozing..." style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--input-bg);color:var(--text);font-size:13px;outline:none;min-height:100px;resize:vertical;font-family:inherit;"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" onclick="saveStudentsNewQA()" style="background:#2ed573;font-size:13px;padding:8px 16px;">💾 Saqlash</button>
+        <button class="btn" onclick="document.getElementById('studentsAddForm').style.display='none'" style="background:#666;font-size:13px;padding:8px 16px;">Bekor qilish</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="studentsExtraContainer"></div>
 
   <div class="card searchable">
     <h2>ISFT Instituti Tarixi va Faoliyati</h2>
@@ -875,7 +927,9 @@ kirishini cheklash. Talabalarni imtihonlarga qabul qilish uchun zarur bo'lgan o'
     <p>📞 <a href="tel:+998555123737">+998 55 512 37 37</a></p>
     <p>🤖 <a href="https://t.me/isftsamarqand_bot" target="_blank">@isftsamarqand_bot</a></p>
 
-    <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
+    <div style="position:sticky;bottom:0;background:var(--bg);padding:12px 0;border-top:1px solid var(--border);z-index:100;margin-top:10px;">
+      <button class="btn" onclick="goHome()" style="font-size:15px;padding:12px 28px;">⬅ Asosiy sahifa</button>
+    </div>
   </div>
 
 </div>
@@ -919,7 +973,7 @@ function searchText(){
 }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 .qa-card h3 { font-size:14px; font-weight:700; color:#4a8cf5; margin-bottom:8px; line-height:1.5; }
-.qa-card p { font-size:13px; line-height:1.8; color:#c8d8e8; white-space:pre-wrap; }
+.qa-card p { font-size:13px; line-height:1.8; color:var(--card-text); white-space:pre-wrap; }
 .qa-del-btn {
   position:absolute; top:10px; right:10px;
   background:rgba(255,71,87,.15); color:#ff4757;
@@ -1071,6 +1125,103 @@ window.openSection=function(id){
 const _origOpen2=window.openSection;
 loadQaData();
 })();
+</script>
+
+<script>
+// ===== TALABALAR BO'LIMI BOSHQARUV =====
+let studentsAdminMode = false;
+let studentsExtra = [];
+
+function loadStudentsExtra(){
+  try{const s=localStorage.getItem("isft_students_extra");studentsExtra=s?JSON.parse(s):[];}
+  catch(e){studentsExtra=[];}
+}
+function saveStudentsExtra(){localStorage.setItem("isft_students_extra",JSON.stringify(studentsExtra));}
+
+function renderStudentsExtra(){
+  let cont=document.getElementById("studentsExtraContainer");
+  if(!cont)return;
+  cont.innerHTML="";
+  studentsExtra.forEach((item,idx)=>{
+    const d=document.createElement("div");
+    d.className="card searchable";
+    d.style.position="relative";
+    d.innerHTML=`${studentsAdminMode?`<button onclick="deleteStudentsQA(${idx})" style="position:absolute;top:10px;right:10px;background:rgba(255,71,87,.15);color:#ff4757;border:none;border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;">🗑 O'chirish</button>`:""}
+    <h2>${item.q}</h2><p style="white-space:pre-wrap;">${item.a}</p>`;
+    cont.appendChild(d);
+  });
+}
+
+window.toggleStudentsAdmin=function(){
+  const pin=prompt("Boshqaruv uchun PIN:");
+  if(pin!=="1234"){if(pin!==null)alert("Noto'g'ri PIN!");return;}
+  studentsAdminMode=!studentsAdminMode;
+  document.getElementById("studentsAdminPanel").style.display=studentsAdminMode?"block":"none";
+  renderStudentsExtra();
+};
+window.closeStudentsAdmin=function(){
+  studentsAdminMode=false;
+  document.getElementById("studentsAdminPanel").style.display="none";
+  renderStudentsExtra();
+};
+window.showStudentsAddForm=function(){
+  document.getElementById("studentsAddForm").style.display="block";
+  document.getElementById("stuNewQ").value="";
+  document.getElementById("stuNewA").value="";
+  document.getElementById("stuNewQ").focus();
+};
+window.saveStudentsNewQA=function(){
+  const q=document.getElementById("stuNewQ").value.trim();
+  const a=document.getElementById("stuNewA").value.trim();
+  if(!q||!a){alert("Sarlavha va mazmunni to'ldiring!");return;}
+  studentsExtra.push({q,a});saveStudentsExtra();renderStudentsExtra();
+  document.getElementById("studentsAddForm").style.display="none";
+  alert("✅ Qo'shildi!");
+};
+window.deleteStudentsQA=function(idx){
+  if(!confirm("O'chirishni tasdiqlaysizmi?"))return;
+  studentsExtra.splice(idx,1);saveStudentsExtra();renderStudentsExtra();
+};
+window.importStudentsFromFile=function(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l.length>0);
+    const items=[];let cQ=null,cA=[];
+    for(const line of lines){
+      if(/^\d+[\)\.:–-]/.test(line)){
+        if(cQ&&cA.length>0)items.push({q:cQ,a:cA.join("\n")});
+        cQ=line;cA=[];
+      }else if(cQ)cA.push(line);
+    }
+    if(cQ&&cA.length>0)items.push({q:cQ,a:cA.join("\n")});
+    if(items.length===0){alert("❌ Format aniqlanmadi.");return;}
+    if(confirm(items.length+" ta karta topildi. Qo'shilsinmi?")){
+      studentsExtra=[...studentsExtra,...items];saveStudentsExtra();renderStudentsExtra();
+      alert("✅ "+items.length+" ta karta qo'shildi!");
+    }
+  };
+  reader.readAsText(file,"UTF-8");
+  input.value="";
+};
+window.exportStudentsTxt=function(){
+  if(studentsExtra.length===0){alert("Qo'shimcha karta yo'q.");return;}
+  let txt="ISFT — TALABALAR BO'LIMI QOSHIMCHALAR\n"+"=".repeat(50)+"\n\n";
+  studentsExtra.forEach(item=>{txt+=item.q+"\n"+item.a+"\n\n"+"-".repeat(40)+"\n\n";});
+  const blob=new Blob([txt],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download="ISFT_Talabalar_extra.txt";a.click();
+  URL.revokeObjectURL(url);
+};
+
+// Override openSection to init students admin too
+const _origOS2=window.openSection;
+window.openSection=function(id){
+  _origOS2(id);
+  if(id==="students"){loadStudentsExtra();renderStudentsExtra();}
+};
+
+loadStudentsExtra();
 </script>
 </body>
 </html>
