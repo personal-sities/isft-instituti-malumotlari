@@ -221,14 +221,56 @@ footer{
 
 <!-- QABUL -->
 <div class="section" id="admission">
-  <div class="card">
-    <h2>📌 Qabul bo‘limi</h2>
-    <p>
-      <strong>Qabul 30-sentabr kuni rasman tugatilgan.</strong><br><br>
-      Ma’lumot olish uchun <b>1-iyun</b sanasidan so‘ng:<br><br>
-      📞 <b>+998 55 506 17 17</b>
-    </p>
-    <br>
+
+  <div class="search">
+    <input type="text" id="admissionSearch" placeholder="🔍 Qabul bo'yicha qidirish..." onkeyup="searchAdmission()">
+  </div>
+
+  <div class="card" id="adminPanel" style="border:2px dashed #4a7ab5;display:none;">
+    <h2>🔧 Boshqaruv paneli</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="btn" onclick="showAddForm()" style="background:#2ed573;">➕ Yangi savol qo'shish</button>
+      <button class="btn" onclick="document.getElementById('importFile').click()" style="background:#ffa502;">📥 Fayldan import</button>
+      <input type="file" id="importFile" accept=".txt" style="display:none" onchange="importFromFile(this)">
+      <button class="btn" onclick="exportToTxt()" style="background:#a55eea;">📤 Export (TXT)</button>
+      <button class="btn" onclick="resetToDefault()" style="background:#ff6b35;">🔄 Asliga qaytarish</button>
+      <button class="btn" onclick="closeAdmin()" style="background:#ff4757;">✖ Yopish</button>
+    </div>
+    <div id="addForm" style="display:none;background:#0f1923;border-radius:10px;padding:16px;margin-bottom:12px;">
+      <h3 style="margin-bottom:10px;font-size:14px;">📝 Yangi savol-javob qo'shish</h3>
+      <div style="margin-bottom:8px;">
+        <label style="font-size:12px;color:#8fa3b8;display:block;margin-bottom:4px;">Savol / sarlavha:</label>
+        <input type="text" id="newQ" placeholder="Masalan: 32) Yotoqxona bormi?" style="width:100%;padding:10px;border:1.5px solid #2d3f55;border-radius:8px;background:#16212e;color:#e8edf2;font-size:13px;outline:none;">
+      </div>
+      <div style="margin-bottom:10px;">
+        <label style="font-size:12px;color:#8fa3b8;display:block;margin-bottom:4px;">Javob:</label>
+        <textarea id="newA" placeholder="Javobni yozing..." style="width:100%;padding:10px;border:1.5px solid #2d3f55;border-radius:8px;background:#16212e;color:#e8edf2;font-size:13px;outline:none;min-height:100px;resize:vertical;font-family:inherit;"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" onclick="saveNewQA()" style="background:#2ed573;">💾 Saqlash</button>
+        <button class="btn" onclick="document.getElementById('addForm').style.display='none'" style="background:#2d3f55;">Bekor qilish</button>
+      </div>
+    </div>
+    <div style="background:#0f1923;border-radius:8px;padding:12px;font-size:12px;color:#8fa3b8;line-height:1.8;">
+      <b style="color:#4a8cf5;">📋 TXT import formati:</b><br>
+      Har bir savol raqam va qavs bilan boshlanishi kerak:<br>
+      <code style="background:#1d2d3e;padding:2px 6px;border-radius:4px;color:#06d6a0;">1) Savol matni</code><br>
+      <code style="background:#1d2d3e;padding:2px 6px;border-radius:4px;color:#e8edf2;">Javob matni shu yerda</code>
+    </div>
+  </div>
+
+  <div style="text-align:right;margin-bottom:8px;">
+    <button onclick="toggleAdmin()" style="background:none;border:1px solid #2d3f55;color:#5a7a96;padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;">🔧 Boshqaruv</button>
+  </div>
+
+  <div class="card searchable-adm">
+    <h2>📌 Qabul bo'limi</h2>
+    <p>Ma'lumot olish uchun <b>1-iyundan</b> keyin:<br><br>📞 <b>+998 55 506 17 17</b></p>
+  </div>
+
+  <div id="qaContainer"></div>
+
+  <div style="padding:10px 0;">
     <button class="btn" onclick="goHome()">⬅ Asosiy sahifa</button>
   </div>
 </div>
@@ -237,6 +279,12 @@ footer{
 <div class="section" id="students">
   <div class="search">
     <input type="text" id="searchInput" placeholder="🔍 Qidirish..." onkeyup="searchText()">
+  </div>
+
+  <!-- Qabul bo'limi kartasi -->
+  <div class="card searchable" style="border-left:4px solid #4a8cf5;cursor:pointer;" onclick="openSection('admission')">
+    <h2>📌 Qabul bo'limi ma'lumotlari →</h2>
+    <p style="color:#8fa3b8;font-size:13px;">Qabul jarayoni, kontrakt summalari, grant, imtihon, perevod bo'yicha to'liq ma'lumot. Ko'rish uchun bosing.</p>
   </div>
 
   <div class="card searchable">
@@ -857,6 +905,172 @@ function searchText(){
     card.style.display=card.innerText.toLowerCase().includes(q)?"block":"none";
   });
 }
+</script>
+
+<style>
+.qa-card {
+  background: var(--card, #1a2535);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  position: relative;
+  animation: fadeIn .3s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.qa-card h3 { font-size:14px; font-weight:700; color:#4a8cf5; margin-bottom:8px; line-height:1.5; }
+.qa-card p { font-size:13px; line-height:1.8; color:#c8d8e8; white-space:pre-wrap; }
+.qa-del-btn {
+  position:absolute; top:10px; right:10px;
+  background:rgba(255,71,87,.15); color:#ff4757;
+  border:none; border-radius:6px; padding:3px 8px;
+  font-size:11px; cursor:pointer; display:none;
+}
+.admin-active .qa-del-btn { display:block; }
+</style>
+
+<script>
+(function(){
+const DEFAULT_QA = [
+  {q:"1) Institut to'g'risida to'liq ma'lumot — ISFT qachon boshlagan?", a:"ISFT instituti o'z ishini 2016-yildan Xalqaro biznes maktab sifatida boshlagan. 2021-yilga kelib, №0035 raqamli Litsenziya bo'yicha \"ISFT Instituti\" brend nomi orqali oliygoh sifatida faoliyat yuritadi.\n\n2025 yil 23-yanvarda №IA00078 seriyali Xalqaro institutsional akkreditatsiyasi Sertifikati berilgan.\n\nISFT instituti 2024-2025 o'quv yilida akreditasiyadan o'tgan va 3000+ bitiruvchilarini diplom bilan taqdirlagan. 2025-2026 o'quv yilida 7000+ talaba bitirishi kutilyapti.\n\nInstitutimizda kunduzgi va masofaviy ta'lim shakllari mavjud, 4 ta fakultet 16 ta yo'nalish:\n• Buxgalteriya hisobi va moliya\n• Biznes va menejment\n• Moliya sohasida boshqaruv\n• Pedagogika, Psixologiya\n• Boshlang'ich ta'lim, Maktabgacha ta'lim\n• Xorijiy til va adabiyoti\n• Filologiya va tillarni o'qitish\n• Xalqaro munosabatlar\n• Iqtisodiyot, Bank ishi, Marketing, Menejment\n• Axborot tizimlari va texnologiyalari\n• Axborot xavfsizligi\n\n⚠️ Masofaviy ta'limda gumanitar yo'nalishlar mavjud emas (Psixologiyadan tashqari)"},
+  {q:"2) Diplom faqat O'zbekistonda tan olinadimi? Institut yopilsa nima bo'ladi?", a:"Xalqaro akkreditatsiyadan o'tganligi sababli 70 dan ortiq O'rta Osiyo davlatlarida tan olinadi.\n\nInstitut davlat litsenziyasiga ega va yopilmaydi.\nAgar yopilgan taqdirda talabalar Davlat Universitetlariga ko'chiriladi."},
+  {q:"3) ISFT Instituti qayerda joylashgan?", a:"Toshkent shahrida 2 ta bino:\n1) Mirzo Ulug'bek tumani, Bahor MFY 102/5 (Eco1 va Eco2)\n   Mo'ljal: Eco bozor to'g'risida\n2) Buyuk Ipak yo'li ko'chasi, 58 (Asosiy bino)\n   Mo'ljal: Buyuk Ipak Yo'li metro oldi\n\nSamarqand filiali:\nMirzo Bedil ko'chasi, 24-uy\nMo'ljal: Eski Farfor zavodi ro'parasi"},
+  {q:"4) Ta'lim tizimi qanday?", a:"O'qish kredit-modul tizimida bo'lib o'tadi.\n\nImtihon fanlari yo'nalish bo'yicha:\n1. Buxgalteriya hisobi va moliya — matematika; ona tili/rus/ingliz\n2. Biznes va menejment — matematika; ona tili/rus/ingliz\n3. Xalqaro munosabatlar — tarix; o'zbek/rus\n4. Moliya sohasida boshqaruv — matematika; ona tili/rus/ingliz\n5. Pedagogika — biologiya; ona tili/rus\n6. Boshlang'ich ta'lim — ona tili; matematika\n7. Maktabgacha ta'lim — biologiya; ona tili\n8. Psixologiya — biologiya; ona tili/rus\n9. Xorijiy til va adabiyoti — ingliz tili; ona tili\n10. Filologiya — ingliz tili; ona tili\n11. Iqtisodiyot — matematika; ona tili/rus\n12. Bank ishi va auditi — matematika; ona tili/rus\n13-16. Marketing, Menejment, Axborot tizimlari, Axborot xavfsizligi — matematika; ona tili"},
+  {q:"5) Yotoqxona bilan ta'minlanadimi?", a:"Hozirda faqat Samarqand filialimizda yotoqxona mavjud.\nToshkentda ham tez orada ochilishi rejalashtirilgan."},
+  {q:"6) ISFT Instituti HEMIS dasturiga kiritilganmi?", a:"Ha, ISFT instituti HEMIS platformasida ro'yxatdan o'tgan.\nhemis.uz sayti orqali tekshirish mumkin."},
+  {q:"7) Kontrakt summalari qancha?", a:"Kunduzgi ta'lim:\n• Xalqaro fakultet — BHMning 50 baravari (18 750 000 so'm)\n• Mahalliy fakultet — BHMning 46 baravari (17 250 000 so'm)\n\nMasofaviy ta'lim:\n• BHMning 25 baravari — 9 375 000 so'm\n\nMagistratura (Toshkent):\n• BHMning 65 baravari — 24 375 000 so'm\n\nSamarqand filiali:\n• Kunduzgi — BHMning 44 baravari (16 500 000 so'm)\n• Magistratura — BHMning 60 baravari (22 500 000 so'm)\n\nTo'lov grafigi:\n• 1-to'lov: 30-sentabr\n• 2-to'lov: 1-dekabr\n• 3-to'lov: 1-mart\n• 4-to'lov: 1-may\n\n2-mutaxassislik / ko'chirib kelgan talabalar: 100% to'lasa 20% chegirma"},
+  {q:"8) Kontrakt summasi har yili ko'tariladimi?", a:"Ha, shartnomaning 3.1-bandiga asosan kontrakt har o'quv yili uchun BHMga qarab hisoblanadi:\n• Kunduzgi — BHMning 50 barobari\n• Sirtqi — BHMning 25 barobari\n\nKontrakt har yilning 15-avgustida amaldagi BHM bo'yicha hisoblanadi.\n\n❗ BHM = Bazaviy hisoblash miqdori (Eng kam oylik ish haqqi)"},
+  {q:"9) Grant o'rinlari bormi?", a:"Kunduzgi ta'lim uchun umumiy va maxsus grant o'rinlari (yoshlar daftari, ayollar daftari, temir daftar, yetim va nogironligi bor nomzodlar) rejalashtirilgan.\n\nGrant tanlovi bosqichlari:\n1-bosqich: Ichki imtihonlardan 100 balldan yuqori\n2-bosqich: Mantiqiy test\n3-bosqich: Maxsus komissiya suhbati"},
+  {q:"10) Qanday o'qituvchilar dars beradi?", a:"• 10 dan oshiq o'quv muassasa professorlari\n• 50 dan ziyod ko'p yillik tajribaga ega malakali professorlar (magistratura va doktaratura)\n• 20 dan ziyod fan nomzodlari va dotsentlar"},
+  {q:"11) Darslar nechidan nechigacha?", a:"Kunduzgi va Masofaviy ta'limda:\nDushanba – Shanba, 08:30 dan 18:00 gacha."},
+  {q:"12) Boshqa universitetlardan perevod qilish mumkinmi?", a:"Ha, ichki va tashqi perevodlar mavjud.\n\nTashqi perevod — faqat 2-kursdan qabul qilinadi.\nXorijdan ham perevod qilish mumkin.\n\nTalabalar uchun talab:\n• 1-kursni tugatgan bo'lishlari kerak\n• Yakuniy imtihonlardan o'tgan bo'lishlari kerak\n• 1-kurs tugatganligi haqida buyruq bo'lishi kerak"},
+  {q:"13) Imtihon qanday shaklda (onlayn yoki offline)?", a:"Imtihon onlayn tarzda 2 ta asosiy fandan bo'lib o'tadi.\nMaksimal umumiy natija: 156 ball.\n\nTalabalikka tavsiya uchun minimal natija:\n• Kunduzgi ta'lim: 70 balldan yuqori\n• Masofaviy ta'lim: 50 balldan yuqori"},
+  {q:"14) IELTS yoki CEFR sertifikati imtiyoz beriladimi?", a:"Yo'nalishida Ingliz tili fani bo'lgan abituriyent imtihon o'rniga:\n• IELTS (minimum 5.5 ball) yoki\n• CEFR (B2 yoki undan yuqori) sertifikatini taqdim etishi mumkin."},
+  {q:"15) Magistratura yoki 2-mutaxassislikda o'qisa bo'ladimi?", a:"2-mutaxassislik: Kunduzgi ta'limga 2-kursdan qabul qilinadi.\n\nMagistratura yo'nalishlari (2 yil, kunduzgi):\n• Xorijiy til va adabiyoti\n• Pedagogika\n• Buxgalteriya hisobi\n• Davlat moliyaviy nazorati va auditi\n\nKontrakt: Toshkent — 24 375 000 so'm | Samarqand — 22 500 000 so'm"},
+  {q:"16) O'zbekiston fuqaroligi bo'lmagan abituriyentlar qabul qilinadimi?", a:"Ha, albatta!"},
+  {q:"17) Kechki smena mavjudmi?", a:"Yo'q, hozircha mavjud emas."},
+  {q:"18) Masofaviy ta'lim haqida to'liq ma'lumot", a:"• O'qish davomiyligi: 4 yil\n• Darslar: online tarzda\n• Gumanitar yo'nalishlar mavjud emas (Psixologiyadan tashqari)"},
+  {q:"19) Arxivga topshirilishi kerak bo'lgan hujjatlar", a:"1. Familya o'zgargan bo'lsa, FHDYO dan ma'lumotnoma\n2. Pasport nusxasi — 3 dona (asli ko'rsatilgan holda)\n3. Diplom yoki attestat (ilovasi bilan) asl nusxasi\n4. Institut bilan shartnoma asl 1 nusxasi\n5. Til sertifikati (agar imtihondan ozod etilgan bo'lsa)\n6. Delo papka (iplik) — 1 dona\n7. Konvert A5 — 1 dona"},
+  {q:"20) Kontraktni necha bo'lib to'lash mumkin?", a:"To'rtga bo'lib to'lash mumkin (shartnomadagi sanalarga ko'ra)."},
+  {q:"21) Imtiyozni tasdiqlovchi hujjatlar", a:"Temir daftar va my.gov.uz saytidan olingan ma'lumotnoma."},
+  {q:"23) Perevod bo'yicha to'liq ma'lumot", a:"1 va 2 kursni tugatgan talabalar TRANSCRIPT orqali 2 va 3-kursga perevod qilishlari mumkin."},
+  {q:"24) Milliy sertifikat qabul qilinadimi?", a:"Ha, albatta."},
+  {q:"25) Yo'nalishlarni tugatgandan keyin qayerlarda ishlay olaman?", a:"Buxgalteriya: Buxgalter, Moliyachi, Auditor, Soliq mutaxassisi\nBiznes va menejment: Menejer, Loyiha menejeri, HR mutaxassisi\nMoliya boshqaruv: Moliyaviy menejer, Investitsiya mutaxassisi\nPedagogika: O'qituvchi, Metodist\nPsixologiya: Psixolog, Konsultant, HR-psixolog\nBoshlang'ich ta'lim: Boshlang'ich sinf o'qituvchisi\nMaktabgacha ta'lim: Tarbiyachi, Pedagog\nXorijiy til: Tarjimon, O'qituvchi, Call-center mutaxassisi\nFilologiya: Til o'qituvchisi, Tarjimon, Kontent yozuvchi\nXalqaro munosabatlar: Diplomat, Xalqaro kompaniya menejeri\nIqtisodiyot: Iqtisodchi, Analitik\nBank ishi: Bank xodimi, Kredit mutaxassisi\nMarketing: Marketolog, SMM mutaxassis, Reklama menejeri\nMenejment: Menejer, Rahbar, Loyiha boshqaruvchisi\nAxborot tizimlari: Dasturchi, IT mutaxassis, Sistem administrator\nAxborot xavfsizligi: Kiberxavfsizlik mutaxassisi"},
+  {q:"26) Institut O'zbekiston reytingida nechanchi o'rinda?", a:"Xususiy institutlar bo'yicha Top-10 talikiga kiradi."},
+  {q:"28) O'zbekiston fuqaroligi bo'lmagan abituriyentlar", a:"Ha, albatta qabul qilinadi."},
+  {q:"29) Perevod qilish mumkin bo'lmagan yo'nalish bormi?", a:"Transkript ko'rib chiqilib, mutaxassis tomonidan xabar etiladi."},
+  {q:"30) Imtihon qiyinligi va qayta imtihon", a:"Qiyinlik darajasi: DTM testlaridan sal soddaroq.\nYetarli ball to'play olmasangiz, 3 martagacha qayta imtihon qo'yib beriladi."},
+  {q:"31) Grant suhbati qachon va nechi ball kerak?", a:"Suhbatga kirish uchun 100 balldan yuqori olish kerak.\nSuhbat sanasi ijtimoiy sahifalarimizda e'lon qilinadi.\n\nRektor: G'ulomov Ibrohim Rustam o'g'li\nProrektor: Temirov Anvar Amirovich"}
+];
+
+let adminMode = false;
+let qaData = [];
+
+function loadQaData(){
+  try{const s=localStorage.getItem("isft_qa_data");qaData=s?JSON.parse(s):[...DEFAULT_QA];}
+  catch(e){qaData=[...DEFAULT_QA];}
+}
+function saveQaData(){localStorage.setItem("isft_qa_data",JSON.stringify(qaData));}
+
+function renderQA(data){
+  const c=document.getElementById("qaContainer");if(!c)return;
+  c.innerHTML="";
+  (data||qaData).forEach((item,idx)=>{
+    const d=document.createElement("div");
+    d.className="qa-card searchable-adm";
+    d.innerHTML=`<button class="qa-del-btn" onclick="deleteQA(${idx})">🗑 O'chirish</button><h3>${item.q}</h3><p>${item.a.replace(/</g,"&lt;")}</p>`;
+    c.appendChild(d);
+  });
+  if(adminMode)c.classList.add("admin-active");
+  else c.classList.remove("admin-active");
+}
+
+window.toggleAdmin=function(){
+  const pin=prompt("Boshqaruv uchun PIN:");
+  if(pin!=="1234"){if(pin!==null)alert("Noto'g'ri PIN!");return;}
+  adminMode=!adminMode;
+  document.getElementById("adminPanel").style.display=adminMode?"block":"none";
+  renderQA();
+};
+window.closeAdmin=function(){
+  adminMode=false;
+  document.getElementById("adminPanel").style.display="none";
+  renderQA();
+};
+window.showAddForm=function(){
+  document.getElementById("addForm").style.display="block";
+  document.getElementById("newQ").value="";
+  document.getElementById("newA").value="";
+  document.getElementById("newQ").focus();
+};
+window.saveNewQA=function(){
+  const q=document.getElementById("newQ").value.trim();
+  const a=document.getElementById("newA").value.trim();
+  if(!q||!a){alert("Savol va javobni to'ldiring!");return;}
+  qaData.push({q,a});saveQaData();renderQA();
+  document.getElementById("addForm").style.display="none";
+  alert("✅ Muvaffaqiyatli qo'shildi!");
+};
+window.deleteQA=function(idx){
+  if(!confirm("Bu savol-javobni o'chirishni tasdiqlaysizmi?"))return;
+  qaData.splice(idx,1);saveQaData();renderQA();
+};
+window.searchAdmission=function(){
+  const q=document.getElementById("admissionSearch").value.toLowerCase();
+  document.querySelectorAll(".searchable-adm").forEach(c=>{
+    c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
+  });
+};
+window.importFromFile=function(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const parsed=parseQAText(e.target.result);
+    if(parsed.length===0){alert("❌ Fayl formatini tanib bo'lmadi.");return;}
+    if(confirm(parsed.length+" ta savol-javob topildi. Qo'shilsinmi?")){
+      qaData=[...qaData,...parsed];saveQaData();renderQA();
+      alert("✅ "+parsed.length+" ta savol-javob qo'shildi!");
+    }
+  };
+  reader.readAsText(file,"UTF-8");
+  input.value="";
+};
+function parseQAText(text){
+  const lines=text.split("\n").map(l=>l.trim()).filter(l=>l.length>0);
+  const items=[];let cQ=null,cA=[];
+  for(const line of lines){
+    if(/^\d+[\)\.:–-]/.test(line)){
+      if(cQ&&cA.length>0)items.push({q:cQ,a:cA.join("\n")});
+      cQ=line;cA=[];
+    }else if(cQ)cA.push(line);
+  }
+  if(cQ&&cA.length>0)items.push({q:cQ,a:cA.join("\n")});
+  return items;
+}
+window.exportToTxt=function(){
+  let txt="ISFT INSTITUTI — QABUL BO'LIMI\n"+"=".repeat(50)+"\n\n";
+  qaData.forEach(item=>{txt+=item.q+"\n"+item.a+"\n\n"+"-".repeat(40)+"\n\n";});
+  const blob=new Blob([txt],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download="ISFT_Qabul.txt";a.click();
+  URL.revokeObjectURL(url);
+};
+window.resetToDefault=function(){
+  if(!confirm("Barcha o'zgarishlar o'chiriladi. Davom etasizmi?"))return;
+  qaData=[...DEFAULT_QA];saveQaData();renderQA();alert("✅ Asliga qaytarildi.");
+};
+
+// openSection override
+const _orig=window.openSection;
+window.openSection=function(id){
+  _orig(id);
+  if(id==="admission"){loadQaData();renderQA();}
+};
+
+// Talabalar bo'limi search — import card ham qo'shiladi
+const _origOpen2=window.openSection;
+loadQaData();
+})();
 </script>
 </body>
 </html>
